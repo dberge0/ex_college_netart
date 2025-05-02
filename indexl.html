@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Boyfriend Came Back from the War – Essay Remix</title>
+    <style>
+      html,body{height:100%;margin:0}
+      body{
+        background:#000;
+        color:#fff;
+        font-family:"Courier New",monospace;
+        position:relative;
+      }
+      /* Grid for up to 9 frames (3×3) */
+      #screen{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        grid-template-rows:repeat(3,1fr);
+        width:100%;
+        height:100%;
+      }
+      .cell{
+        border:0;
+        padding:8px;
+        overflow:auto;
+        box-sizing:border-box;
+        display:none;
+        white-space:pre-line;
+      }
+      a{color:#fff;text-decoration:none}
+      a:hover{text-decoration:underline}
+      #start{
+        position:absolute;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        cursor:pointer;
+      }
+      #start img{max-width:100%;max-height:100%;}
+    </style>
+  </head>
+  <body>
+    <div id="start" onclick="startArt()" title="Click to begin">
+      <p><u>My boyfriend came back from the war. After dinner they began to write an essay about this piece.</u> </p>
+    </div>
+
+    <div id="screen">
+      <div class="cell" id="cell0"></div>
+      <div class="cell" id="cell1"></div>
+      <div class="cell" id="cell2"></div>
+      <div class="cell" id="cell3"></div>
+      <div class="cell" id="cell4"></div>
+      <div class="cell" id="cell5"></div>
+      <div class="cell" id="cell6"></div>
+      <div class="cell" id="cell7"></div>
+      <div class="cell" id="cell8"></div>
+    </div>
+
+    <script>
+      const paragraphs=[
+`Olia Lialina’s 1996 web piece My Boyfriend Came Back from the War is one of the first big works of net art. It lives fully inside a web browser and tells a short, broken-up story about a couple who reunite after the boyfriend returns from an unnamed war. Even though the website feels basic today, plain black background, grainy black‑and‑white photos, and tiny bits of text, Lialina turns those limits into a fascinating story. By clicking links(?), we move through the story in many small chunks that appear in separate frames on the screen. In this paper I hope to explain how her use of links, images, and old‑school web tricks make the tale feel real and tell an excellent story. I also talk about why the piece mattered in 1996 and why people still study it now.`,
+`When you first open the site, it just says, “My boyfriend came back from the war. After dinner they left us alone.” Under that line is this mysterious link that really makes you want to press it. Every time you click, the browser window splits again, showing a new bit of text or a small pixelated picture. Nothing loads on a new tab, it all stays in one place and keeps breaking into smaller boxes. That clicking is not just for fun, you feel compelled to keep going out of morbid curiosity to figure out what’s going to happen between the two (potentially soon to be former) lovers. We choose what sentence to open next, and that choice changes how we feel about the story. Because the site never tells us which link is “right,” we have to build the order in our heads.`,
+`Unlike a normal book or movie, this work has no clear beginning‑middle‑end. You can end up reading the line where the girl admits she kissed someone else long before you learn the boy’s first words. In the end all the frames turn solid black, filling the screen. It feels like the conversation crashed, that blank screen also leaves us thinking about what was unsaid between them. Lialina once called the piece a “net‑film,” she studied film in Moscow, so the site borrows film tricks. The black‑and‑white photos look like old silent movies, the text lines act like subtitles, each new frame that pops up feels like a cut to a different camera shot. Because the frames stay on screen together, we get a split‑screen effect, almost like watching many scenes at once.`,
+`The way the site keeps everything silent and low‑tech was partly due to slow dial‑up speeds back then, images had to be tiny or they would never load, but that slow load time helped build tension. In 1996 you would probably sit there waiting for each picture to appear, the same way the characters wait for each other to speak. The story itself is simple on the surface: a soldier comes back, but the couple can’t get back to normal. Because the war is never named, the piece stands for any conflict, but in 1990s Russia many families knew people returning from wars in Afghanistan or Chechnya, so the plot felt close to home. The broken layout seems to mirror broken memories. When we think back, don’t recall life in neat order, we remember flashes here and there and by making us click around it really gave me that feeling. In 1996 the web was tiny, millions of sites today versus only a handful then. Using just basic HTML, Lialina showed other artists they did not need fancy video files to make moving stories online and proved that the web could be the artwork itself, not just a gallery flyer.`,
+`Museums like Rhizome helped viewers see this piece of Netart by running the site inside emulators that mimic 1990s web viewers. On the 20th anniversary in 2016, shows in Basel and Eindhoven displayed old computers so visitors could click through the story the way early web users did! Students today see the piece as retro, yet its feelings stay sharp. The simple black boxes and slow clicks let us focus on mood instead of fancy effects. The story’s open end invites us to think about what happens next. And as people who text, swipe, and scroll daily, we know how weird it is to talk through screens. Lialina’s lovers struggle with that same barrier, so the tale remains easy to understand.`,
+`Michael Connor’s 2016 Rhizome essay “Speaking in Net Language: My Boyfriend Came Back from the War” breaks the piece down by showing how Lialina turns simple HTML into a kind of homemade movie. Connor starts with Lialina’s own idea that anything online should “speak in net.language,” then explains what that language looks like: plain white links, low‑res black‑and‑white bitmaps, and the old‑school browser frame tag. He argues that these choices aren’t just technical, they set the sad, heavy mood of the story and slow the reader down, the way a director controls pacing in film. Drawing on Lev Manovich and Sergei Eisenstein, Connor shows how Lialina swaps film cuts for browser clicks, calling this “spatial and temporal montage.” He walks through the first few clicks, pointing out how each new split screen freezes one moment while the next keeps moving, letting many slices of time stack up on‑screen at once. Connor’s close reading is clear and helpful, though he mostly sticks to form and doesn’t dig much into gender or politics. Still, the essay makes a solid case that Lialina invented a new visual language by bending early‑web limits into fresh storytelling tools.`,
+`My Boyfriend Came Back from the War shows that strong stories do not need high‑end graphics or large words. By using plain HTML, small GIFs, and smart placement, Olia Lialina turned the young web into a stage for deep emotion. The piece teaches us how limits can spark creativity: slow speeds add suspense, simple frames add drama, and reader clicks add choice. Even decades later, clicking through those black‑and‑white fragments reminds us how fragile love and memory can be. It also reminds us that art on the internet can last, change, and keep speaking to new people one click at a time.`
+      ];
+
+      let cellIndex=0;
+
+      function nextFrame(){
+        if(cellIndex<paragraphs.length){
+          const cell=document.getElementById('cell'+cellIndex);
+          if(cell){
+            cell.style.display='block';
+            cell.innerHTML=`${paragraphs[cellIndex]}${cellIndex<paragraphs.length-1?'<p><u><a href="#" onclick="nextFrame();return false;">&gt;&gt;&gt;</a></u></p>':''}`;
+            cellIndex++;
+          }
+        }
+      }
+
+      function startArt(){
+        document.getElementById('start').style.display='none';
+        nextFrame();
+      }
+    </script>
+  </body>
+</html>
